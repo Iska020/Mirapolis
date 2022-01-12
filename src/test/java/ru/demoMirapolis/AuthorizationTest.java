@@ -49,15 +49,15 @@ public class AuthorizationTest extends BaseClass {
     @Test
     public void checkCorrectPasswordRecovery() {
         Assert.assertEquals(SUCCESSFUL_MESSAGE, authorizationPage
-                .goToCorrectPasswordRecovery()
-                .CorrectPasswordRecovery(CORRECT_LOGIN));
+                .goToPasswordRecovery()
+                .correctPasswordRecovery(CORRECT_LOGIN));
     }
 
     @Test
     public void checkIncorrectPasswordRecovery() {
         Assert.assertEquals(ALERT_MESSAGE, authorizationPage
-                .goToIncorrectPasswordRecovery()
-                .IncorrectPasswordRecovery(generateSomeString()));
+                .goToPasswordRecovery()
+                .incorrectPasswordRecovery(generateSomeString()));
     }
 
     @Test

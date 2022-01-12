@@ -8,15 +8,15 @@ public class PasswordRecoveryPage {
 
     private final SelenideElement inputLogin = $("input[type = 'text']");
     private final SelenideElement successfulMessage = $(".success"),
-            alertMessage = $(".alert");
+                                  alertMessage = $(".alert");
     private final SelenideElement enterButton = $("button[type = 'submit']");
 
-    public String CorrectPasswordRecovery(String correctLogin) {
+    public String correctPasswordRecovery(String correctLogin) {
         inputLogin.setValue(correctLogin).pressEnter();
         return successfulMessage.getText();
     }
 
-    public String IncorrectPasswordRecovery(String incorrectLogin) {
+    public String incorrectPasswordRecovery(String incorrectLogin) {
         inputLogin.setValue(incorrectLogin);
         enterButton.click();
         return alertMessage.getText();

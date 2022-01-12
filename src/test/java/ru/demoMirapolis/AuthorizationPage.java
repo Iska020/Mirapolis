@@ -27,34 +27,30 @@ public class AuthorizationPage {
         mirapolisIcon.click();
     }
 
-    public MainPage correctInput(String correctLogin, String correctPassword) {
-        inputLogin.setValue(correctLogin);
-        inputPassword.setValue(correctPassword);
+    public void inputFieldsAndClickOnEnterButton(String someLogin, String somePassword) {
+        inputLogin.setValue(someLogin);
+        inputPassword.setValue(somePassword);
         enterButton.click();
+    }
+
+    public MainPage correctInput(String correctLogin, String correctPassword) {
+        inputFieldsAndClickOnEnterButton(correctLogin, correctPassword);
         return new MainPage();
     }
 
     public String incorrectInput(String incorrectLogin, String incorrectPassword) {
-        inputLogin.setValue(incorrectLogin);
-        inputPassword.setValue(incorrectPassword);
-        enterButton.click();
+        inputFieldsAndClickOnEnterButton(incorrectLogin, incorrectPassword);
         return switchTo().alert().getText();
     }
 
     public AuthorizationPage goToAuthorizationPageAfterAlert(String correctLogin, String incorrectPassword) {
-        inputLogin.setValue(correctLogin);
-        inputPassword.setValue(incorrectPassword).pressEnter();
+        inputFieldsAndClickOnEnterButton(correctLogin, incorrectPassword);
         switchTo().alert().accept();
         enterInSystemElement.shouldBe(visible);
         return this;
     }
 
-    public PasswordRecoveryPage goToCorrectPasswordRecovery() {
-        forgotPassword.click();
-        return new PasswordRecoveryPage();
-    }
-
-    public PasswordRecoveryPage goToIncorrectPasswordRecovery() {
+    public PasswordRecoveryPage goToPasswordRecovery() {
         forgotPassword.click();
         return new PasswordRecoveryPage();
     }
