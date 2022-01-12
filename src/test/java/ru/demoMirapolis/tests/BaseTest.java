@@ -1,11 +1,11 @@
-package ru.demoMirapolis;
+package ru.demoMirapolis.tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import org.junit.After;
 import org.junit.Before;
 
-public abstract class BaseClass {
+public abstract class BaseTest {
 
     public void setUp() {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\Iskan\\Documents\\chromedriver_win32\\chromedriver.exe");

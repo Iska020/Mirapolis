@@ -1,9 +1,9 @@
-package ru.demoMirapolis;
+package ru.demoMirapolis.utils;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
-public class SupportingClass {
+public class TestUtils {
 
     private static final SecureRandom random = new SecureRandom();
 
