@@ -1,4 +1,4 @@
-package ru.demoMirapolis.utils;
+package ru.demo.mirapolis.utils;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;

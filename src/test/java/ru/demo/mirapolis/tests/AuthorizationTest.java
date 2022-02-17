@@ -1,11 +1,10 @@
-package ru.demoMirapolis.tests;
+package ru.demo.mirapolis.tests;
 
 import org.junit.Assert;
 import org.junit.Test;
-import ru.demoMirapolis.pages.AuthorizationPage;
-import ru.demoMirapolis.pages.MainPage;
-
-import static ru.demoMirapolis.utils.TestUtils.*;
+import ru.demo.mirapolis.pages.AuthorizationPage;
+import ru.demo.mirapolis.utils.TestUtils;
+import ru.demo.mirapolis.pages.MainPage;
 
 public class AuthorizationTest extends BaseTest {
 
@@ -37,13 +36,13 @@ public class AuthorizationTest extends BaseTest {
 
     @Test
     public void checkIncorrectInput() {
-        authorizationPage.fillLogin(CORRECT_LOGIN).fillPassword(generateSomeString()).clickOnEnterButton();
+        authorizationPage.fillLogin(CORRECT_LOGIN).fillPassword(TestUtils.generateSomeString()).clickOnEnterButton();
         Assert.assertEquals(ALERT_TEXT, authorizationPage.getAlertText());
     }
 
     @Test
     public void checkCorrectPageAfterAlert() {
-        authorizationPage.fillLogin(CORRECT_LOGIN).fillPassword(generateSomeString()).clickOnEnterButton();
+        authorizationPage.fillLogin(CORRECT_LOGIN).fillPassword(TestUtils.generateSomeString()).clickOnEnterButton();
         Assert.assertEquals(TITLE_OF_AUTHORIZATION_PAGE, authorizationPage
                 .goToAuthorizationPageAfterAlert()
                 .getTitleOfAuthorizationPage());
@@ -62,7 +61,7 @@ public class AuthorizationTest extends BaseTest {
     public void checkIncorrectPasswordRecovery() {
         Assert.assertEquals(ALERT_MESSAGE, authorizationPage
                 .goToPasswordRecovery()
-                .fillLogin(generateSomeString())
+                .fillLogin(TestUtils.generateSomeString())
                 .clickOnEnterButton()
                 .getWrongMessage());
     }
@@ -70,7 +69,7 @@ public class AuthorizationTest extends BaseTest {
     @Test
     public void checkCorrectWorkShowPasswordButton() {
         Assert.assertEquals(PASSWORD_TYPE_ATTRIBUTE, authorizationPage
-                .fillPassword(generateSomeString())
+                .fillPassword(TestUtils.generateSomeString())
                 .clickOnShowPasswordButton()
                 .getPasswordFieldTypeAttribute());
     }

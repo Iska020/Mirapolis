@@ -1,4 +1,4 @@
-package ru.demoMirapolis.pages;
+package ru.demo.mirapolis.pages;
 
 import com.codeborne.selenide.SelenideElement;
 

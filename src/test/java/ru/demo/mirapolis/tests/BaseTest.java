@@ -1,4 +1,4 @@
-package ru.demoMirapolis.tests;
+package ru.demo.mirapolis.tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
