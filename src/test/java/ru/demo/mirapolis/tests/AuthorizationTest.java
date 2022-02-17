@@ -1,76 +1,97 @@
 package ru.demo.mirapolis.tests;
 
-import org.junit.Assert;
-import org.junit.Test;
+import io.qameta.allure.*;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 import ru.demo.mirapolis.pages.AuthorizationPage;
-import ru.demo.mirapolis.utils.TestUtils;
+import ru.demo.mirapolis.utils.ConfProperties;
+import ru.demo.mirapolis.utils.UtilsTest;
 import ru.demo.mirapolis.pages.MainPage;
 
 public class AuthorizationTest extends BaseTest {
 
-    private final static String AUTHORIZATION_PAGE_URL = "https://lmslite47vr.demo.mirapolis.ru/mira";
-    private final static String SUCCESSFUL_MESSAGE = "На ваш электронный адрес отправлена инструкция по восстановлению пароля.";
-    private final static String ALERT_MESSAGE = "Пользователь с таким именем не найден.";
-    private final static String CORRECT_LOGIN = "fominaelena";
-    private final static String CORRECT_PASSWORD = "1P73BP4Z";
-    private final static String TITLE_OF_AUTHORIZATION_PAGE = "Авторизация";
-    private final static String TITLE_OF_MAIN_PAGE = "Главная страница";
-    private final static String ALERT_TEXT = "Неверные данные для авторизации";
-    private final static String PASSWORD_TYPE_ATTRIBUTE = "text";
-
-    private final AuthorizationPage authorizationPage = new AuthorizationPage(AUTHORIZATION_PAGE_URL);
-
+    @Epic("Testing for Mirapolis site")
+    @Description("Test checks that the correct page is loaded after clicking on the Mirapolis icon")
     @Test
     public void clickOnMirapolis() {
-        authorizationPage.clickOnMirapolisIcon();
-        Assert.assertEquals(TITLE_OF_AUTHORIZATION_PAGE, authorizationPage.getTitleOfAuthorizationPage());
+        Assert.assertEquals(new AuthorizationPage(ConfProperties.getProperty("mirapolis.auth.page.url"))
+                .clickOnMirapolisIcon()
+                .getTitleOfAuthorizationPage(), ConfProperties.getProperty("mirapolis.auth.page.title"));
     }
 
+    @Epic("Testing for Mirapolis site")
+    @Feature("Tests for correct or incorrect input data to authorization form")
+    @Severity(SeverityLevel.BLOCKER)
     @Test
     public void checkCorrectInput() {
-        authorizationPage.fillLogin(CORRECT_LOGIN).fillPassword(CORRECT_PASSWORD).clickOnEnterButton();
-        Assert.assertEquals(TITLE_OF_MAIN_PAGE, new MainPage()
+        new AuthorizationPage(ConfProperties.getProperty("mirapolis.auth.page.url"))
+                .fillLogin(ConfProperties.getProperty("mirapolis.auth.page.correct.login"))
+                .fillPassword(ConfProperties.getProperty("mirapolis.auth.page.correct.password"))
+                .clickOnEnterButton();
+        Assert.assertEquals(new MainPage()
                 .mainPageTextShouldBeVisible()
-                .getTitleOfMainPage());
+                .getTitleOfMainPage(), ConfProperties.getProperty("mirapolis.main.page.title"));
     }
 
+    @Epic("Testing for Mirapolis site")
+    @Feature("Tests for correct or incorrect input data to authorization form")
     @Test
     public void checkIncorrectInput() {
-        authorizationPage.fillLogin(CORRECT_LOGIN).fillPassword(TestUtils.generateSomeString()).clickOnEnterButton();
-        Assert.assertEquals(ALERT_TEXT, authorizationPage.getAlertText());
+        AuthorizationPage authorizationPage = new AuthorizationPage(ConfProperties
+                .getProperty("mirapolis.auth.page.url"));
+        authorizationPage
+                .fillLogin(ConfProperties.getProperty("mirapolis.auth.page.correct.login"))
+                .fillPassword(UtilsTest.generateSomeString())
+                .clickOnEnterButton();
+        Assert.assertEquals(authorizationPage.getAlertText(), ConfProperties
+                .getProperty("mirapolis.auth.page.alert.message"));
     }
 
+    @Epic("Testing for Mirapolis site")
     @Test
     public void checkCorrectPageAfterAlert() {
-        authorizationPage.fillLogin(CORRECT_LOGIN).fillPassword(TestUtils.generateSomeString()).clickOnEnterButton();
-        Assert.assertEquals(TITLE_OF_AUTHORIZATION_PAGE, authorizationPage
+        AuthorizationPage authorizationPage = new AuthorizationPage(ConfProperties
+                .getProperty("mirapolis.auth.page.url"));
+        authorizationPage
+                .fillLogin(ConfProperties.getProperty("mirapolis.auth.page.correct.login"))
+                .fillPassword(UtilsTest.generateSomeString())
+                .clickOnEnterButton();
+        Assert.assertEquals(authorizationPage
                 .goToAuthorizationPageAfterAlert()
-                .getTitleOfAuthorizationPage());
+                .getTitleOfAuthorizationPage(), ConfProperties.getProperty("mirapolis.auth.page.title"));
     }
 
+    @Epic("Testing for Mirapolis site")
+    @Feature("Tests for correct or incorrect password recovery after input data to authorization form")
     @Test
     public void checkCorrectPasswordRecovery() {
-        Assert.assertEquals(SUCCESSFUL_MESSAGE, authorizationPage
+        Assert.assertEquals(new AuthorizationPage(ConfProperties.getProperty("mirapolis.auth.page.url"))
                 .goToPasswordRecovery()
-                .fillLogin(CORRECT_LOGIN)
+                .fillLogin(ConfProperties.getProperty("mirapolis.auth.page.correct.login"))
                 .clickOnEnterButton()
-                .getSuccessfulMessage());
+                .getSuccessfulMessage(), ConfProperties
+                .getProperty("mirapolis.password.recovery.page.successful.message"));
     }
 
+    @Epic("Testing for Mirapolis site")
+    @Feature("Tests for correct or incorrect password recovery after input data to authorization form")
     @Test
     public void checkIncorrectPasswordRecovery() {
-        Assert.assertEquals(ALERT_MESSAGE, authorizationPage
+        Assert.assertEquals(new AuthorizationPage(ConfProperties.getProperty("mirapolis.auth.page.url"))
                 .goToPasswordRecovery()
-                .fillLogin(TestUtils.generateSomeString())
+                .fillLogin(UtilsTest.generateSomeString())
                 .clickOnEnterButton()
-                .getWrongMessage());
+                .getWrongMessage(), ConfProperties.getProperty("mirapolis.password.recovery.page.alert.message"));
     }
 
+    @Epic("Testing for Mirapolis site")
+    @Severity(SeverityLevel.NORMAL)
     @Test
     public void checkCorrectWorkShowPasswordButton() {
-        Assert.assertEquals(PASSWORD_TYPE_ATTRIBUTE, authorizationPage
-                .fillPassword(TestUtils.generateSomeString())
+        Assert.assertEquals(new AuthorizationPage(ConfProperties.getProperty("mirapolis.auth.page.url"))
+                .fillPassword(UtilsTest.generateSomeString())
                 .clickOnShowPasswordButton()
-                .getPasswordFieldTypeAttribute());
+                .getPasswordFieldTypeAttribute(), ConfProperties
+                .getProperty("mirapolis.auth.page.password.type.attribute"));
     }
 }

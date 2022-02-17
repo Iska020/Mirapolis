@@ -2,21 +2,22 @@ package ru.demo.mirapolis.tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
-import org.junit.After;
-import org.junit.Before;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import ru.demo.mirapolis.utils.ConfProperties;
 
 public abstract class BaseTest {
 
-    @Before
+    @BeforeClass
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Iskan\\IdeaProjects\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", ConfProperties.getProperty("chrome.driver.path"));
         System.setProperty("selenide.browser", "Chrome");
         Configuration.driverManagerEnabled = true;
         Configuration.browserSize = "1600x900";
-        Configuration.headless = false;
+        Configuration.headless = true;
     }
 
-    @After
+    @AfterMethod
     public void tearDown() {
         Selenide.closeWebDriver();
     }

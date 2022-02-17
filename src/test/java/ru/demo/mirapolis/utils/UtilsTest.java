@@ -3,7 +3,7 @@ package ru.demo.mirapolis.utils;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
-public class TestUtils {
+public class UtilsTest {
 
     private static final SecureRandom random = new SecureRandom();
 

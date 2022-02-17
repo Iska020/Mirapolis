@@ -21,8 +21,9 @@ public class AuthorizationPage {
         return title();
     }
 
-    public void clickOnMirapolisIcon() {
+    public AuthorizationPage clickOnMirapolisIcon() {
         mirapolisIcon.click();
+        return this;
     }
 
     public AuthorizationPage fillLogin(String login) {
